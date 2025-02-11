@@ -26,7 +26,7 @@ export const Code = ({ children, variant }: CodeProps) => {
 };
 const styles = StyleSheet.create({
   codeContainer: {
-    paddingInline: 4,
+    paddingInline: 6,
     borderRadius: 4,
     backgroundColor: "#EDEDF0",
   },
