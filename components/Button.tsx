@@ -18,8 +18,8 @@ export const Button = ({ text, onPress }: ButtonProps) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#FD366E",
-    paddingBlock: 6,
-    paddingHorizontal: 10,
+    paddingBlock: 10,
+    paddingHorizontal: 12,
     borderRadius: 8,
   },
   text: {
