@@ -7,6 +7,7 @@ export const fontStyles = StyleSheet.create({
   },
   titleM: {
     fontSize: 20,
+    color: "#2D2D31",
   },
   bodyM: {
     fontSize: 14,
