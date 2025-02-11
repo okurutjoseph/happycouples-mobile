@@ -26,5 +26,6 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontWeight: 500,
     fontSize: 14,
+    lineHeight: 20,
   },
 });
