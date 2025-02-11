@@ -24,6 +24,22 @@ export const Logs = ({ toggleBottomSheet, isOpen, logs }: LogsProps) => {
       .replace("AM", "")
       .replace("PM", "");
   };
+  const getEmptyState = () => {
+    return (
+      <>
+        <View style={styles.logTitle}>
+          <Text style={styles.logTitleText}>Logs</Text>
+        </View>
+        <View style={styles.logMeta}>
+          <View style={styles.logMetaRow}>
+            <View style={styles.logMetaCell}>
+              <Text style={styles.value}>There are no logs to show</Text>
+            </View>
+          </View>
+        </View>
+      </>
+    );
+  };
   const getTable = () => {
     return (
       <View style={styles.table}>
@@ -97,7 +113,7 @@ export const Logs = ({ toggleBottomSheet, isOpen, logs }: LogsProps) => {
               </View>
             </View>
           </View>
-          {getTable()}
+          {logs.length > 0 ? getTable() : getEmptyState()}
         </>
       )}
     </View>
