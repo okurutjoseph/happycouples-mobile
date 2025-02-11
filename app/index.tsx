@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Header } from "@/components/Header";
 import { useRef, useState } from "react";
 import { Card } from "@/components/Card";
@@ -102,7 +102,7 @@ export default function HomeScreen() {
         </ScrollView>
         <BottomSheet
           index={0}
-          snapPoints={[70, "50%", "90%"]}
+          snapPoints={[Platform.OS === "android" ? 50 : 70, "50%", "90%"]}
           enablePanDownToClose={false}
           handleComponent={null}
           ref={bottomSheetRef}
@@ -124,7 +124,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   bottomSheet: {
     borderTopWidth: 1,
-    minHeight: 70,
+    minHeight: Platform.OS === "android" ? 50 : 70,
     flex: 1,
     borderColor: "#EDEDF0",
   },
