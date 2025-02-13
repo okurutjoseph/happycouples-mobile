@@ -27,12 +27,13 @@ export default function HomeScreen() {
     setConnectionState("loading");
     let log: Log;
     try {
-      await client.ping();
+      const res = await client.ping();
       log = {
         date: new Date(),
         method: "GET",
         path: "/v1/ping",
         status: 200,
+        response: res,
       };
       setConnectionState("success");
     } catch (err) {
@@ -41,6 +42,7 @@ export default function HomeScreen() {
         method: "GET",
         path: "/v1/ping",
         status: err instanceof AppwriteException ? err.code : 500,
+        response: err instanceof AppwriteException ? err.message : "unknown",
       };
       setConnectionState("error");
     }

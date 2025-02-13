@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { IconChevronDown } from "@/assets/images/IconChevronDown";
 import { IconChevronUp } from "@/assets/images/IconChevronUp";
 import { Log } from "@/types/log";
@@ -42,31 +48,39 @@ export const Logs = ({ toggleBottomSheet, isOpen, logs }: LogsProps) => {
   };
   const getTable = () => {
     return (
-      <View style={styles.table}>
-        <View style={{ ...styles.tableRow, ...styles.logTitle }}>
-          <Text style={{ flexGrow: 1 }}>Date</Text>
-          <Text style={{ ...styles.tableCell }}>Status</Text>
-          <Text style={{ ...styles.tableCell }}>Method</Text>
-          <Text style={{ ...styles.tableCell }}>Path</Text>
-        </View>
-        {logs.map((log, index) => {
-          return (
-            <View key={index} style={styles.tableRow}>
-              <Text style={{ flexGrow: 1 }}>{formatDate(log.date)}</Text>
-              <View style={{ ...styles.tableCell }}>
-                <View style={{ display: "flex", flexDirection: "row" }}>
-                  <Pill
-                    status={log.status === 200 ? "success" : "error"}
-                    text={log.status.toString()}
-                  />
+      <ScrollView horizontal style={styles.horizontalScroll}>
+        <View>
+          <View style={{ ...styles.tableRow, ...styles.logTitle }}>
+            <Text style={{ flexGrow: 1 }}>Date</Text>
+            <Text style={styles.tableCell}>Status</Text>
+            <Text style={styles.tableCell}>Method</Text>
+            <Text style={styles.tableCell}>Path</Text>
+            <Text style={styles.tableCellResponse}>Response</Text>
+          </View>
+          {logs.map((log, index) => {
+            return (
+              <View key={index} style={styles.tableRow}>
+                <Text style={{ flexGrow: 1 }}>{formatDate(log.date)}</Text>
+                <View style={styles.tableCell}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Pill
+                      status={log.status === 200 ? "success" : "error"}
+                      text={log.status.toString()}
+                    />
+                  </View>
+                </View>
+                <Text style={styles.tableCell}>{log.method}</Text>
+                <Text style={styles.tableCell}>{log.path}</Text>
+                <View style={styles.tableCellResponse}>
+                  <Code variant={"primary"}>
+                    {JSON.stringify(log.response)}
+                  </Code>
                 </View>
               </View>
-              <Text style={{ ...styles.tableCell }}>{log.method}</Text>
-              <Text style={{ ...styles.tableCell }}>{log.path}</Text>
-            </View>
-          );
-        })}
-      </View>
+            );
+          })}
+        </View>
+      </ScrollView>
     );
   };
   return (
@@ -184,5 +198,11 @@ const styles = StyleSheet.create({
   },
   tableCell: {
     width: 80,
+  },
+  tableCellResponse: {
+    width: 200,
+  },
+  horizontalScroll: {
+    flexGrow: 0,
   },
 });

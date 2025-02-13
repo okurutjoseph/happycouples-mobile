@@ -3,4 +3,5 @@ export type Log = {
   status: number;
   method: "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
   path: string;
+  response: string;
 };
