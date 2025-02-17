@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   line: {
     flexGrow: 1,
-    width: 100,
+    width: 50,
   },
   content: {
     height: 450,
