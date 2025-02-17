@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     paddingInline: 32,
     maxWidth: 350,
+    gap: 48,
   },
   iconsStatus: {
     display: "flex",
