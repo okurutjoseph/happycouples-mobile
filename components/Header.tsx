@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     height: 450,
   },
   icon: {
-    width: 100,
+    width: 80,
     height: 100,
   },
   background: {
@@ -102,8 +102,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   line: {
-    flexGrow: 1,
-    width: 100,
+    width: 70,
   },
   content: {
     height: 450,
@@ -113,6 +112,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     paddingInline: 32,
     maxWidth: 350,
+    gap: 48,
   },
   iconsStatus: {
     display: "flex",
