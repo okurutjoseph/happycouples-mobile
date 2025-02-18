@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     height: 450,
   },
   icon: {
-    width: 100,
+    width: 80,
     height: 100,
   },
   background: {
@@ -102,8 +102,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   line: {
-    flexGrow: 1,
-    width: 50,
+    width: 70,
   },
   content: {
     height: 450,
