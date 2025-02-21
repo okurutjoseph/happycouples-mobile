@@ -119,12 +119,6 @@ export const Logs = ({ toggleBottomSheet, isOpen, logs }: LogsProps) => {
                   {process.env.EXPO_PUBLIC_APPWRITE_PROJECT_NAME}
                 </Text>
               </View>
-              <View style={styles.logMetaCell}>
-                <Text style={styles.label}>Version</Text>
-                <Text style={styles.value}>
-                  {process.env.EXPO_PUBLIC_APPWRITE_VERSION}
-                </Text>
-              </View>
             </View>
           </View>
           {logs.length > 0 ? getTable() : getEmptyState()}
