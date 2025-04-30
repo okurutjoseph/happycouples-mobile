@@ -1,5 +1,12 @@
 import { ReactNode } from "react";
-import { Linking, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  Dimensions,
+  Linking,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 interface CardProps {
   children: ReactNode;
@@ -29,5 +36,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     padding: 16,
+    maxWidth:
+      Platform.OS === "web" && Dimensions.get("window").width >= 1024
+        ? 288
+        : "auto",
   },
 });

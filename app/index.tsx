@@ -1,6 +1,13 @@
-import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { Header } from "@/components/Header";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Card } from "@/components/Card";
 import { fontStyles } from "@/styles/font";
 import { IconArrowSmRight } from "@/assets/images/IconArrowSmRight";
@@ -22,6 +29,7 @@ export default function HomeScreen() {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [currentSnapIndex, setCurrentSnapIndex] = useState<number>(0);
   const [logs, setLogs] = useState<Array<Log>>([]);
+  const [cardPadding, setCardPadding] = useState<number>(0);
 
   const doPing = async () => {
     setConnectionState("loading");
@@ -57,7 +65,22 @@ export default function HomeScreen() {
     }
   };
 
+  const snapPoints = useMemo(
+    () => [Platform.OS === "android" ? 50 : 70, "50%", "90%"],
+    [],
+  );
+
+  const resolveSnapPoint = (point: string | number): number => {
+    if (typeof point === "number") return point;
+    if (point.endsWith("%")) {
+      const percent = parseFloat(point.replace("%", ""));
+      return (percent / 100) * Dimensions.get("window").height;
+    }
+    return 0;
+  };
+
   const handleSnapChange = (index: number) => {
+    setCardPadding(resolveSnapPoint(snapPoints[index]) + 48);
     setCurrentSnapIndex(index);
   };
 
@@ -66,7 +89,9 @@ export default function HomeScreen() {
       <GestureHandlerRootView>
         <ScrollView>
           <Header pingFunction={doPing} state={connectionState} />
-          <View style={styles.cardContainer}>
+          <View
+            style={{ ...styles.cardContainer, paddingBlockEnd: cardPadding }}
+          >
             <Card>
               <View style={styles.cardHeader}>
                 <Text style={fontStyles.titleM}>Edit your app</Text>
@@ -74,9 +99,8 @@ export default function HomeScreen() {
               <Text>
                 <Code variant={"secondary"}>Edit </Code>
                 <Code variant={"primary"}>app/index.tsx</Code>
-                <Code variant={"secondary"}> to get started with building</Code>
                 <Code variant={"secondary"}>
-                  your app and many more to come
+                  to get started with building your app
                 </Code>
               </Text>
             </Card>
@@ -104,7 +128,7 @@ export default function HomeScreen() {
         </ScrollView>
         <BottomSheet
           index={0}
-          snapPoints={[Platform.OS === "android" ? 50 : 70, "50%", "90%"]}
+          snapPoints={snapPoints}
           enablePanDownToClose={false}
           handleComponent={null}
           ref={bottomSheetRef}
@@ -133,7 +157,9 @@ const styles = StyleSheet.create({
   cardContainer: {
     paddingInline: 20,
     display: "flex",
-    gap: 16,
+    flexDirection: Dimensions.get("window").width < 1024 ? "column" : "row",
+    justifyContent: "center",
+    gap: 28,
   },
   scrollview: {
     height: 200,

@@ -33,5 +33,7 @@ const styles = StyleSheet.create({
   codeContainerSecondary: {},
   code: {
     fontSize: 14,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 20,
   },
 });

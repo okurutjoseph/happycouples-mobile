@@ -1,9 +1,18 @@
-import { Text, StyleSheet, View, ActivityIndicator } from "react-native";
-import { Image } from "expo-image";
+import {
+  Text,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  Platform,
+  Dimensions,
+} from "react-native";
+import { ImageBackground } from "expo-image";
 import { LoadingLine } from "@/components/status-lines/LoadingLine";
 import { SuccessLine } from "@/components/status-lines/SuccessLine";
 import { fontStyles } from "@/styles/font";
 import { Button } from "@/components/Button";
+import ReactLogo from "@/assets/images/react";
+import AppwriteLogo from "@/assets/images/appwrite";
 
 interface HeaderProps {
   state: "idle" | "loading" | "success" | "error";
@@ -58,75 +67,111 @@ export const Header = ({ state, pingFunction }: HeaderProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("../assets/images/grid.png")}
-        style={styles.background}
-      />
-      <View style={styles.content}>
-        <View style={styles.iconsStatus}>
-          <Image
-            source={require("../assets/images/rn.png")}
-            style={styles.icon}
-          />
-          <View style={styles.line}>{getStateLine()}</View>
-          <Image
-            source={require("../assets/images/appwrite.png")}
-            style={styles.icon}
-          />
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={fontStyles.titleL}>{getTitleText()}</Text>
-          {getDescriptionText()}
-          {state !== "loading" && (
-            <View style={styles.buttonContainer}>
-              <Button text={"Send a ping"} onPress={pingFunction} />
+    <ImageBackground
+      source={require("../assets/images/grid-desktop.png")}
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <View style={styles.iconsStatus}>
+            <View style={styles.iconContainer}>
+              <View style={styles.iconInnerContainer}>
+                <ReactLogo />
+              </View>
             </View>
-          )}
+            <View style={styles.line}>{getStateLine()}</View>
+            <View style={styles.iconContainer}>
+              <View style={styles.iconInnerContainer}>
+                <AppwriteLogo />
+              </View>
+            </View>
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={fontStyles.titleL}>{getTitleText()}</Text>
+            <View style={styles.descriptionText}>{getDescriptionText()}</View>
+            {state !== "loading" && (
+              <View style={styles.buttonContainer}>
+                <Button text={"Send a ping"} onPress={pingFunction} />
+              </View>
+            )}
+          </View>
         </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 450,
-  },
-  icon: {
-    width: 80,
-    height: 100,
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
   },
   background: {
-    ...StyleSheet.absoluteFillObject,
     width: "100%",
+    backgroundSize: "contain",
   },
   line: {
-    width: 70,
+    width:
+      Platform.OS === "web"
+        ? Dimensions.get("window").width < 1024
+          ? 100
+          : 152
+        : 70,
   },
   content: {
-    height: 450,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     alignSelf: "center",
     paddingInline: 32,
     maxWidth: 350,
-    gap: 48,
+    gap: 47,
   },
   iconsStatus: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 100,
+    marginTop: Platform.OS === "web" ? 156 : 100,
   },
   textContainer: {
+    height: 208,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     gap: 8,
   },
   buttonContainer: {
-    marginBlockStart: 32,
+    marginBlockStart: 24,
+  },
+  descriptionText: {},
+  iconContainer: {
+    borderRadius: 38,
+    borderWidth: 1,
+    borderColor: "#19191C0A",
+    backgroundColor: "#F9F9FA",
+    padding: 12,
+    shadowColor: "rgba(0, 0, 0, 0.04)",
+    shadowOffset: { width: 0, height: 9.36 },
+    shadowOpacity: 1,
+    shadowRadius: 9.36,
+    elevation: 5,
+  },
+  iconInnerContainer: {
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: "#FAFAFB",
+    backgroundColor: "#FFFFFF",
+    padding:
+      Platform.OS === "web"
+        ? Dimensions.get("window").width < 1024
+          ? 24
+          : 36
+        : 20,
+    shadowColor: "rgba(0, 0, 0, 0.03)",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 12,
+    elevation: 4,
   },
 });

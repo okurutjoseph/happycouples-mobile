@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { IconChevronDown } from "@/assets/images/IconChevronDown";
 import { IconChevronUp } from "@/assets/images/IconChevronUp";
@@ -93,36 +94,40 @@ export const Logs = ({ toggleBottomSheet, isOpen, logs }: LogsProps) => {
         {isOpen ? <IconChevronUp /> : <IconChevronDown />}
       </TouchableOpacity>
       {isOpen && (
-        <>
-          <View style={styles.logTitle}>
-            <Text style={styles.logTitleText}>Project</Text>
-          </View>
-          <View style={styles.logMeta}>
-            <View style={styles.logMetaRow}>
-              <View style={styles.logMetaCell}>
-                <Text style={styles.label}>Endpoint</Text>
-                <Text style={styles.value}>
-                  {process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}
-                </Text>
+        <View style={styles.logContainer}>
+          <View>
+            <View style={styles.logTitle}>
+              <Text style={styles.logTitleText}>Project</Text>
+            </View>
+            <View style={styles.logMeta}>
+              <View style={styles.logMetaRow}>
+                <View style={styles.logMetaCell}>
+                  <Text style={styles.label}>Endpoint</Text>
+                  <Text style={styles.value}>
+                    {process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}
+                  </Text>
+                </View>
+                <View style={styles.logMetaCell}>
+                  <Text style={styles.label}>Project ID</Text>
+                  <Text style={styles.value}>
+                    {process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.logMetaCell}>
-                <Text style={styles.label}>Project ID</Text>
-                <Text style={styles.value}>
-                  {process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID}
-                </Text>
+              <View style={styles.logMetaRow}>
+                <View style={styles.logMetaCell}>
+                  <Text style={styles.label}>Project name</Text>
+                  <Text style={styles.value}>
+                    {process.env.EXPO_PUBLIC_APPWRITE_PROJECT_NAME}
+                  </Text>
+                </View>
               </View>
             </View>
-            <View style={styles.logMetaRow}>
-              <View style={styles.logMetaCell}>
-                <Text style={styles.label}>Project name</Text>
-                <Text style={styles.value}>
-                  {process.env.EXPO_PUBLIC_APPWRITE_PROJECT_NAME}
-                </Text>
-              </View>
-            </View>
           </View>
-          {logs.length > 0 ? getTable() : getEmptyState()}
-        </>
+          <View style={styles.logs}>
+            {logs.length > 0 ? getTable() : getEmptyState()}
+          </View>
+        </View>
       )}
     </View>
   );
@@ -130,6 +135,13 @@ export const Logs = ({ toggleBottomSheet, isOpen, logs }: LogsProps) => {
 
 const styles = StyleSheet.create({
   container: {},
+  logContainer: {
+    display: "flex",
+    flexDirection: Dimensions.get("window").width < 1024 ? "column" : "row",
+  },
+  logs: {
+    flexGrow: 1,
+  },
   header: {
     display: "flex",
     flexDirection: "row",

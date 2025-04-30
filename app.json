@@ -20,7 +20,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/appwrite-logo.png"
     },
     "plugins": [
       "expo-router",
@@ -32,6 +32,12 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+      "expo-font",
+      {
+        "fonts": ["node_modules/@expo-google-fonts/poppins/300Light/Poppins_300Light.ttf"]
+      }
       ]
     ],
     "experiments": {
