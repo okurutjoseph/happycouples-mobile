@@ -40,7 +40,8 @@
             "node_modules/@expo-google-fonts/poppins/300Light/Poppins_300Light.ttf"
           ]
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
