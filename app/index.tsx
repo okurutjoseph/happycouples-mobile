@@ -1,4 +1,4 @@
-import { Client, Account, AppwriteException, OAuthProvider } from "react-native-appwrite";
+import { Client, Account, AppwriteException, OAuthProvider, ID } from "react-native-appwrite";
 import { useEffect, useState } from "react";
 import {
   View,
@@ -16,6 +16,9 @@ import {
 } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
+
+console.log("Project ID:", process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID);
+console.log("Endpoint:", process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT);
 
 const client = new Client()
   .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID ?? "")
@@ -37,8 +40,9 @@ export default function AuthScreen() {
     setLoading(true);
     try {
       if (mode === "signup") {
-        await account.create("unique()", email, password);
-        Alert.alert("Signup successful! Please login.");
+        await account.create(ID.unique(), email, password, email);
+        await account.createEmailPasswordSession(email, password);
+        Alert.alert("Signup successful! You are now logged in.");
         setMode("login");
       } else {
         await account.createSession(email, password);
